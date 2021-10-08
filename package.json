@@ -1,0 +1,25 @@
+{
+  "name": "challenge-8",
+  "version": "1.0.0",
+  "description": "pro-team-profile-gen",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsun994/pro-team-profile-gen.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jsun994/pro-team-profile-gen/issues"
+  },
+  "homepage": "https://github.com/jsun994/pro-team-profile-gen#readme",
+  "dependencies": {
+    "inquirer": "^8.2.0"
+  },
+  "devDependencies": {
+    "jest": "^27.2.5"
+  }
+}
