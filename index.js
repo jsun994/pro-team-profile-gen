@@ -40,9 +40,7 @@ const promptManager = () => {
 };
 
 const menu = () => {
-    console.log(`
-    ================
-    `);
+    console.log(`==================================`);
     return inquirer
         .prompt([
         {
