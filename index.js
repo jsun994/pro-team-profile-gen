@@ -8,7 +8,7 @@ const Intern = require('./lib/Intern.js');
 
 const profiles = [];
 
-const promptMgr = () => {
+const promptManager = () => {
     return inquirer
         .prompt([
         {
@@ -39,70 +39,94 @@ const promptMgr = () => {
     });
 };
 
-const promptEmp = () => {
+const menu = () => {
     console.log(`
-    ==================
-    Add a New Employee
-    ==================
+    ================
     `);
     return inquirer
         .prompt([
         {
             type: 'list',
-            name: 'role',
-            message: 'emp role',
-            choices: ['Engineer', 'Intern']
-        },
+            name: 'options',
+            message: 'choose an option',
+            choices: ['Add an engineer', 'Add an intern', 'Finish building my team']
+        }
+    ])
+    .then(ans => {
+        if (ans.options === 'Add an engineer') {
+            promptEngineer();
+        }
+        else if (ans.options === 'Add an intern') {
+            promptIntern();
+        }
+        else {
+            console.log(profiles);
+            return profiles;
+        }
+    });
+};
+
+const promptEngineer = () => {
+    inquirer
+        .prompt([
         {
             type: 'input',
             name: 'name',
-            message: 'emp name'
+            message: 'engineer name'
         },
         {
             type: 'input',
             name: 'id',
-            message: 'emp id'
+            message: 'engineer id'
         },
         {
             type: 'input',
             name: 'email',
-            message: 'emp email'
+            message: 'engineer email'
         },
         {
             type: 'input',
             name: 'github',
-            message: 'emp github',
-            when: (ans) => ans.role === 'Engineer'
+            message: 'engineer github'
+        }
+    ])
+    .then(engrData => {
+        const { name, id, email, github } = engrData;
+        const engineer = new Engineer(name, id, email, github);
+        profiles.push(engineer);
+        menu();
+    });
+};
+
+const promptIntern = () => {
+    return inquirer
+        .prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'intern name'
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: 'intern id'
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'intern email'
         },
         {
             type: 'input',
             name: 'school',
-            message: 'emp school',
-            when: (ans) => ans.role === 'Intern'
-        },
-        {
-            type: 'confirm',
-            name: 'more',
-            message: 'another employee',
-            default: false
+            message: 'intern school'
         }
     ])
-    .then(empData => {
-        if (empData.role === 'Engineer') {
-            const { name, id, email, github } = empData;
-            const engineer = new Engineer(name, id, email, github);
-            profiles.push(engineer);
-        } else {
-            const { name, id, email, school } = empData;
-            const intern = new Intern(name, id, email, school);
-            profiles.push(intern);
-        }
-        if (empData.more) {
-            return promptEmp();
-        } else {
-            console.log(profiles);
-            return profiles;
-        }
+    .then(internData => {
+        const { name, id, email, school } = internData;
+        const intern = new Intern(name, id, email, school);
+        profiles.push(intern);
+        menu();
     });
 };
 
@@ -116,9 +140,9 @@ function writeToFile(fileName, data) {
     });
 }
 
-promptMgr()
-    .then(promptEmp)
+//start
+promptManager()
+    .then(menu)
     .catch(err => {
         return console.log(err);
     });
-//writeToFile('./dist/index.html', generate());
