@@ -1,6 +1,6 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const generate = require('./src/generate.js');
+const htmlGenerate = require('./src/generate.js');
 
 const Manager = require('./lib/Manager.js');
 const Engineer = require('./lib/Engineer.js');
@@ -39,92 +39,70 @@ const promptManager = () => {
     });
 };
 
-const menu = () => {
-    console.log(`==================================`);
+const promptEmp = () => {
+    console.log(`
+    ==================
+    Add a New Employee
+    ==================
+    `);
     return inquirer
         .prompt([
         {
             type: 'list',
-            name: 'options',
-            message: 'choose an option',
-            choices: ['Add an engineer', 'Add an intern', 'Finish building my team']
-        }
-    ])
-    .then(ans => {
-        if (ans.options === 'Add an engineer') {
-            promptEngineer();
-        }
-        else if (ans.options === 'Add an intern') {
-            promptIntern();
-        }
-        else {
-            console.log(profiles);
-            return profiles;
-        }
-    });
-};
-
-const promptEngineer = () => {
-    inquirer
-        .prompt([
+            name: 'role',
+            message: 'emp role',
+            choices: ['Engineer', 'Intern']
+        },
         {
             type: 'input',
             name: 'name',
-            message: 'engineer name'
+            message: 'emp name'
         },
         {
             type: 'input',
             name: 'id',
-            message: 'engineer id'
+            message: 'emp id'
         },
         {
             type: 'input',
             name: 'email',
-            message: 'engineer email'
+            message: 'emp email'
         },
         {
             type: 'input',
             name: 'github',
-            message: 'engineer github'
-        }
-    ])
-    .then(engrData => {
-        const { name, id, email, github } = engrData;
-        const engineer = new Engineer(name, id, email, github);
-        profiles.push(engineer);
-        return menu();
-    });
-};
-
-const promptIntern = () => {
-    return inquirer
-        .prompt([
-        {
-            type: 'input',
-            name: 'name',
-            message: 'intern name'
-        },
-        {
-            type: 'input',
-            name: 'id',
-            message: 'intern id'
-        },
-        {
-            type: 'input',
-            name: 'email',
-            message: 'intern email'
+            message: 'emp github',
+            when: (ans) => ans.role === 'Engineer'
         },
         {
             type: 'input',
             name: 'school',
-            message: 'intern school'
+            message: 'emp school',
+            when: (ans) => ans.role === 'Intern'
+        },
+        {
+            type: 'confirm',
+            name: 'more',
+            message: 'another employee',
+            default: false
         }
     ])
-    .then(internData => {
-        const { name, id, email, school } = internData;
-        const intern = new Intern(name, id, email, school);
-        profiles.push(intern);
-        return menu();
+    .then(empData => {
+        if (empData.role === 'Engineer') {
+            const { name, id, email, github } = empData;
+            const engineer = new Engineer(name, id, email, github);
+            profiles.push(engineer);
+        } else {
+            const { name, id, email, school } = empData;
+            const intern = new Intern(name, id, email, school);
+            profiles.push(intern);
+        }
+        if (empData.more) {
+            return promptEmp();
+        } else {
+            console.log(profiles);
+            return profiles;
+        }
     });
 };
 
@@ -140,7 +118,13 @@ function writeToFile(fileName, data) {
 
 //start
 promptManager()
-    .then(menu)
+    .then(promptEmp)
+    .then(profiles => {
+        return htmlGenerate(profiles);
+    })
+    .then(pageHTML => {
+        return writeToFile('./dist/index.html', pageHTML);
+    })
     .catch(err => {
         return console.log(err);
     });
