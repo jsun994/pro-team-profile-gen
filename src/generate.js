@@ -56,10 +56,10 @@ const internGen = (intern) => {
 
 const htmlGenerate = (objs) => {
     const cards = [];
-    for (var i = 0; i < objs.length; i++) {
+    for (let i = 0; i < objs.length; i++) {
         const emp = objs[i];
         const empRole = emp.getRole();
-        console.log(emp);
+        //console.log(emp);
     
         if (empRole === 'Manager') {
             const cardManager = managerGen(emp);

@@ -39,72 +39,86 @@ const promptManager = () => {
     });
 };
 
-const promptEmp = () => {
-    console.log(`
-    ==================
-    Add a New Employee
-    ==================
-    `);
+const menu = () => {
+    console.log(`==================================`);
     return inquirer
         .prompt([
         {
             type: 'list',
-            name: 'role',
-            message: 'emp role',
-            choices: ['Engineer', 'Intern']
-        },
-        {
-            type: 'input',
-            name: 'name',
-            message: 'emp name'
-        },
-        {
-            type: 'input',
-            name: 'id',
-            message: 'emp id'
-        },
-        {
-            type: 'input',
-            name: 'email',
-            message: 'emp email'
-        },
-        {
-            type: 'input',
-            name: 'github',
-            message: 'emp github',
-            when: (ans) => ans.role === 'Engineer'
-        },
-        {
-            type: 'input',
-            name: 'school',
-            message: 'emp school',
-            when: (ans) => ans.role === 'Intern'
-        },
-        {
-            type: 'confirm',
-            name: 'more',
-            message: 'another employee',
-            default: false
+            name: 'options',
+            message: 'choose an option',
+            choices: ['Add an engineer', 'Add an intern', 'Finish building my team']
         }
     ])
-    .then(empData => {
-        if (empData.role === 'Engineer') {
-            const { name, id, email, github } = empData;
+    .then(ans => {
+        if (ans.options === 'Add an engineer') {
+            return inquirer
+            .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'engineer name'
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: 'engineer id'
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: 'engineer email'
+            },
+            {
+                type: 'input',
+                name: 'github',
+                message: 'engineer github'
+            }
+        ])
+        .then(engrData => {
+            const { name, id, email, github } = engrData;
             const engineer = new Engineer(name, id, email, github);
             profiles.push(engineer);
-        } else {
-            const { name, id, email, school } = empData;
-            const intern = new Intern(name, id, email, school);
-            profiles.push(intern);
+            return menu();
+        });
         }
-        if (empData.more) {
-            return promptEmp();
-        } else {
+        else if (ans.options === 'Add an intern') {
+            return inquirer
+                .prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: 'intern name'
+                },
+                {
+                    type: 'input',
+                    name: 'id',
+                    message: 'intern id'
+                },
+                {
+                    type: 'input',
+                    name: 'email',
+                    message: 'intern email'
+                },
+                {
+                    type: 'input',
+                    name: 'school',
+                    message: 'intern school'
+                }
+            ])
+            .then(internData => {
+                const { name, id, email, school } = internData;
+                const intern = new Intern(name, id, email, school);
+                profiles.push(intern);
+                return menu();
+            });
+        }
+        else {
             console.log(profiles);
             return profiles;
         }
     });
-};
+}; 
 
 //write to file
 function writeToFile(fileName, data) {
@@ -118,9 +132,9 @@ function writeToFile(fileName, data) {
 
 //start
 promptManager()
-    .then(promptEmp)
-    .then(profiles => {
-        return htmlGenerate(profiles);
+    .then(menu)
+    .then(data => {
+        return htmlGenerate(data);
     })
     .then(pageHTML => {
         return writeToFile('./dist/index.html', pageHTML);
