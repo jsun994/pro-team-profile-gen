@@ -138,7 +138,7 @@ const menu = () => {
             });
         }
         else {
-            console.log(profiles);
+            //console.log(profiles);
             return profiles;
         }
     });
