@@ -14,12 +14,12 @@ const promptManager = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'manager name',
+            message: 'Please enter name of manager',
             validate: nameInput => {
                 if (nameInput) {
                   return true;
                 } else {
-                  console.log('Please enter a name! (Required)');
+                  console.log('Please enter a name! (required)');
                   return false;
                 }
             }
@@ -27,17 +27,17 @@ const promptManager = () => {
         {
             type: 'input',
             name: 'id',
-            message: 'manager id'
+            message: 'Please enter id of manager'
         },
         {
             type: 'input',
             name: 'email',
-            message: 'manager email'
+            message: 'Please enter email of manager'
         },
         {
             type: 'input',
             name: 'officeNumber',
-            message: 'manager office number'
+            message: 'Please enter office number of manager'
         }
     ])
     .then(mgrData => {
@@ -65,12 +65,12 @@ const menu = () => {
             {
                 type: 'input',
                 name: 'name',
-                message: 'engineer name',
+                message: 'Please enter name of engineer',
                 validate: nameInput => {
                     if (nameInput) {
                       return true;
                     } else {
-                      console.log('Please enter a name! (Required)');
+                      console.log('Please enter a name! (required)');
                       return false;
                     }
                 }
@@ -78,17 +78,17 @@ const menu = () => {
             {
                 type: 'input',
                 name: 'id',
-                message: 'engineer id'
+                message: 'Please enter id of engineer'
             },
             {
                 type: 'input',
                 name: 'email',
-                message: 'engineer email'
+                message: 'Please enter email of engineer'
             },
             {
                 type: 'input',
                 name: 'github',
-                message: 'engineer github'
+                message: 'Please enter github of engineer'
             }
         ])
         .then(engrData => {
@@ -104,12 +104,12 @@ const menu = () => {
                 {
                     type: 'input',
                     name: 'name',
-                    message: 'intern name',
+                    message: 'Please enter name of intern',
                     validate: nameInput => {
                         if (nameInput) {
                           return true;
                         } else {
-                          console.log('Please enter a name! (Required)');
+                          console.log('Please enter a name! (required)');
                           return false;
                         }
                     }
@@ -117,17 +117,17 @@ const menu = () => {
                 {
                     type: 'input',
                     name: 'id',
-                    message: 'intern id'
+                    message: 'Please enter id of intern'
                 },
                 {
                     type: 'input',
                     name: 'email',
-                    message: 'intern email'
+                    message: 'Please enter email of intern'
                 },
                 {
                     type: 'input',
                     name: 'school',
-                    message: 'intern school'
+                    message: 'Please enter school of intern'
                 }
             ])
             .then(internData => {
