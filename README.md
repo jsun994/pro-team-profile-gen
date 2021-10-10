@@ -55,7 +55,7 @@
 ## About The Project
 
 ![media1](./media/htmlex.png)
-Demo Video - [Screencastify](https://drive.google.com/file/d/1BrERThnNdoakIT0nbc6gQBFsE9OMKYXe/view)
+Demo Video - [Screencastify - Google Drive](https://drive.google.com/file/d/1BrERThnNdoakIT0nbc6gQBFsE9OMKYXe/view)
 
 ### Built With
 
