@@ -14,7 +14,15 @@ const promptManager = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'manager name'
+            message: 'manager name',
+            validate: nameInput => {
+                if (nameInput) {
+                  return true;
+                } else {
+                  console.log('Please enter a name! (Required)');
+                  return false;
+                }
+            }
         },
         {
             type: 'input',
@@ -57,7 +65,15 @@ const menu = () => {
             {
                 type: 'input',
                 name: 'name',
-                message: 'engineer name'
+                message: 'engineer name',
+                validate: nameInput => {
+                    if (nameInput) {
+                      return true;
+                    } else {
+                      console.log('Please enter a name! (Required)');
+                      return false;
+                    }
+                }
             },
             {
                 type: 'input',
@@ -88,7 +104,15 @@ const menu = () => {
                 {
                     type: 'input',
                     name: 'name',
-                    message: 'intern name'
+                    message: 'intern name',
+                    validate: nameInput => {
+                        if (nameInput) {
+                          return true;
+                        } else {
+                          console.log('Please enter a name! (Required)');
+                          return false;
+                        }
+                    }
                 },
                 {
                     type: 'input',
