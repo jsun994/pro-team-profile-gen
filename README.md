@@ -19,7 +19,7 @@
     <a href="https://github.com/jsun994/pro-team-profile-gen"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/jsun994/pro-team-profile-gen">View Demo</a>
+    <a href="https://github.com/jsun994/pro-team-profile-gen/tree/main/dist">View Demo</a>
     ·
     <a href="https://github.com/jsun994/pro-team-profile-gen/issues">Report Bug</a>
     ·
@@ -60,6 +60,9 @@
 ### Built With
 
 * Node JS
+* NPM
+* Jest
+* Bootstrap
 
 <!-- GETTING STARTED -->
 ## Getting Started
