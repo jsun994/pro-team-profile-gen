@@ -92,7 +92,7 @@ const promptEngineer = () => {
         const { name, id, email, github } = engrData;
         const engineer = new Engineer(name, id, email, github);
         profiles.push(engineer);
-        menu();
+        return menu();
     });
 };
 
@@ -124,7 +124,7 @@ const promptIntern = () => {
         const { name, id, email, school } = internData;
         const intern = new Intern(name, id, email, school);
         profiles.push(intern);
-        menu();
+        return menu();
     });
 };
 
